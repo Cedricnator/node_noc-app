@@ -1,6 +1,5 @@
-import { error } from "console";
 import { CronService } from "./cron/cron.service"
-import { CheckService } from "./domain/use-cases/checks/check-service";
+import { CheckService } from "../domain/use-cases/checks/check-service";
 
 export class Server {
     public static start() {
