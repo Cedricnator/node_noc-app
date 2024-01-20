@@ -1,5 +1,5 @@
+import { envs } from "./config/plugins/envs.plugin";
 import { Server } from "./presentation/server";
-import 'dotenv/config'
 
 // Funcion anonima autoinvocada, debe esperar a que se ejecute el main
 (async () => {
@@ -8,5 +8,5 @@ import 'dotenv/config'
 
 function main() {
     // Server.start();
-    console.log(process.env.PORT)
+    console.log( envs )
 }
