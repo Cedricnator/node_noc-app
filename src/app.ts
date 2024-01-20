@@ -1,6 +1,10 @@
 import { Server } from "./presentation/server";
 
-export const name: string = "Cedric";
-console.log(`Hello ${name}!`);
+// Funcion anonima autoinvocada, debe esperar a que se ejecute el main
+(async () => {
+    main();
+})();
 
-Server.start();
+function main() {
+    Server.start();
+}
