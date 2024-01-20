@@ -4,6 +4,16 @@
 ## Description:
 Monitoring application(logs) with clean architecture.
 
+# dev
+1. Clonar el archivo env.template a .env
+2. Configurar las variables de entorno
+```
+PORT = 3000
+MAILER_EMAIL = 
+MAILER_SECRET_KEY = 
+PROD = false
+```
+
 ## Install:
 1. Clone the repository
 ```
@@ -21,6 +31,8 @@ npm run dev
 ```
 npm run test
 ```
+
+
 
 ## Contributions:
 Cedric Kirmayr
