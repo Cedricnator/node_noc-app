@@ -36,7 +36,7 @@ export class CheckService implements CheckServiceUseCase {
             
             const entity = {
                 message: `${url} is not ok. ${error }`,
-                level: LogSeverityLevel.HEIGH,
+                level: LogSeverityLevel.HIGH,
                 origin: 'CheckServiceUseCase'
             }
 
