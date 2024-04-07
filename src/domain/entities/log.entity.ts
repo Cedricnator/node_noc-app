@@ -1,22 +1,21 @@
 export enum LogSeverityLevel {
-    LOW = 'LOW',
+    HEIGH  = 'HEIGH',
+    LOW    = 'LOW',
     MEDIUM = 'MEDIUM',
-    HEIGH = 'HEIGH',
 }
 
 export interface LogEntityOptions {
-    level: LogSeverityLevel; // enum
-    message: string;
-    origin: string;
     createdAt?: Date;
+    level:      LogSeverityLevel; // enum
+    message:    string;
+    origin:     string;
 }
 
-
 export class LogEntity {
-    public level: LogSeverityLevel; // enum
-    public message: string;
     public createdAt: Date;
-    public origin: string;
+    public level:     LogSeverityLevel; // enum
+    public message:   string;
+    public origin:    string;
 
     constructor( options:LogEntityOptions ){
         const { message, level, origin, createdAt = new Date} = options;
@@ -40,8 +39,6 @@ export class LogEntity {
             origin: origin
         });
         
-        return log;
-        
+        return log;   
     }
-
 }

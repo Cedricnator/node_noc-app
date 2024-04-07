@@ -1,15 +1,14 @@
-import fs from 'fs';
 import { LogDataSource } from "../../domain/datasources/log.datasource";
 import { LogEntity, LogSeverityLevel } from "../../domain/entities/log.entity";
-import { log } from 'console';
+import fs from 'fs';
 
 export class FileSystemDataSource implements LogDataSource{
-    private readonly logPath: string = 'logs/';
-    private readonly allLogsPath: string = 'logs/logs-all.log';
+    private readonly logPath:        string = 'logs/';
+    private readonly allLogsPath:    string = 'logs/logs-all.log';
     private readonly mediumLogsPath: string = 'logs/logs-medium.log';
-    private readonly hightLogsPath: string = 'logs/logs-hight.log';
+    private readonly hightLogsPath:  string = 'logs/logs-hight.log';
 
-    constructor(  ) {
+    constructor() {
         this.createLogsFiles();
     }
 
@@ -22,11 +21,12 @@ export class FileSystemDataSource implements LogDataSource{
             this.allLogsPath,
             this.mediumLogsPath,
             this.hightLogsPath
+
         ].forEach( path => {
             if ( fs.existsSync( path )) return;
+
             fs.writeFileSync( path, '' );
         });
-
        
     }
 

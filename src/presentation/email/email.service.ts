@@ -1,17 +1,16 @@
-import nodemailer from 'nodemailer';
 import { envs } from '../../config/plugins/envs.plugin';
-import { LogEntity, LogSeverityLevel } from '../../domain/entities/log.entity';
+import nodemailer from 'nodemailer';
 
 interface SendMailOptions {
-    to: string | string[];
-    subject: string;
-    htmlBody: string;
     attachements?: Attachement[];
+    htmlBody: string;
+    subject:  string;
+    to: string | string[];
 }
 
 interface Attachement {
     filename: string;
-    path: string;
+    path:     string;
 }
 
 export class EmailService{
@@ -36,20 +35,10 @@ export class EmailService{
                 attachments: attachements
             });
 
-            const log = new LogEntity({
-                level: LogSeverityLevel.LOW,
-                message: 'Email sent',
-                origin: 'email.service.ts'
-            })
-            
             return true;
         
         } catch (error) {
-            const log = new LogEntity({
-                level: LogSeverityLevel.HEIGH,
-                message: 'Email not sent',
-                origin: 'email.service.ts'
-            })
+        
             return false;
         }
     }

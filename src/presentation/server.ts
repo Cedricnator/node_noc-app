@@ -11,36 +11,16 @@ const fileSystemLogRepository = new LogRepositoryImpl(
 
 const emailService = new EmailService()
 
-
 export class Server {
     public static start() {
         console.log('Server started...');
 
         //* Se usa el caso de uso
-        // new SendEmailLogs(
-        //     emailService,
-        //     fileSystemLogRepository
-        // ).execute(
-        //     ['cedric.kirmayr@gmail.com', 'c.kirmayr01@ufromail.cl']
-        // )
-
-        // emailService.sendEmailWithFileSystemLogs(
-        //     ['cedric.kirmayr@gmail.com', 'c.kirmayr01@ufromail.cl']
-        // );
-
-        // CronService.createJob(
-        //     '*/5 * * * * *',
-        //     () => {
-        //         const url = `http://localhost:3000`; 
-        //         new CheckService(
-        //             fileSystemLogRepository,
-        //             () => console.log(`${url} is ok`),
-        //             (error) => console.error(error),
-                
-        //         ).execute( url );
-        //     }
-        // );
-
+        new SendEmailLogs(
+            emailService,
+            fileSystemLogRepository
+        ).execute(
+            ['cedric.kirmayr@gmail.com', 'c.kirmayr01@ufromail.cl']
+        )
     }
-
 }
