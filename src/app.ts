@@ -6,6 +6,8 @@
 - Arquitectura: Arquitectura por capas, arquitectura hexagonal.
 */
 
+import { envs } from "./config/plugins/envs.plugin";
+import { MongoDataBase } from "./data/mongoDB";
 import { Server } from "./presentation/server";
 
 
@@ -14,6 +16,12 @@ import { Server } from "./presentation/server";
     main();
 })();
 
-function main() {
-    Server.start();
+async function main() {
+    
+    await MongoDataBase.connect({
+        mongoUrl: envs.MONGO_URL,
+        dbName: envs.MONGO_DB_NAME
+    });
+    
+    //Server.start();
 }
