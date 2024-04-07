@@ -24,5 +24,16 @@ async function main() {
         dbName: envs.MONGO_DB_NAME
     });
 
+    const prisma = new PrismaClient();
+    // const newLog = await prisma.logModel.create({
+    //     data: {
+    //         level: 'LOW',
+    //         message: 'Test messae',
+    //         origin: 'App.ts'
+    //     }
+    // })
+    
+    // console.log(newLog)
+   
     Server.start();
 }

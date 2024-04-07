@@ -7,11 +7,12 @@ import { CheckService } from "../domain/use-cases/checks/check-service";
 import { Console, error } from "console";
 import { MongoLogDataSource } from "../intrastructure/datasources/mongo-log.datasource";
 import { LogSeverityLevel } from "../domain/entities/log.entity";
+import { PostgresLogDataSource } from "../intrastructure/datasources/postgres-log.datasource";
 
 const logRepository = new LogRepositoryImpl(
     //new FileSystemDataSource()
-    new MongoLogDataSource(),
-    // new PostgreSQL()
+    // new MongoLogDataSource(),
+    new PostgresLogDataSource()
 );
 
 const emailService = new EmailService()
