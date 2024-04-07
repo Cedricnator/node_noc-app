@@ -8,12 +8,25 @@ import { Console, error } from "console";
 import { MongoLogDataSource } from "../intrastructure/datasources/mongo-log.datasource";
 import { LogSeverityLevel } from "../domain/entities/log.entity";
 import { PostgresLogDataSource } from "../intrastructure/datasources/postgres-log.datasource";
+import { CheckServiceMultiples } from "../domain/use-cases/checks/check-service-multiple";
 
-const logRepository = new LogRepositoryImpl(
-    //new FileSystemDataSource()
-    // new MongoLogDataSource(),
+// const logRepository = new LogRepositoryImpl(
+//     //new FileSystemDataSource()
+//     // new MongoLogDataSource(),
+//     new PostgresLogDataSource()
+// );
+
+const PostgresLogRepository = new LogRepositoryImpl(
     new PostgresLogDataSource()
 );
+
+const fsLogRepository = new LogRepositoryImpl(
+    new FileSystemDataSource()
+);
+
+const mongoLogRepository = new LogRepositoryImpl(
+    new MongoLogDataSource()
+)
 
 const emailService = new EmailService()
 
@@ -32,18 +45,18 @@ export class Server {
         // const logs = await logRepository.getLogs(LogSeverityLevel.LOW );
         // console.log( logs )
 
-        // CronService.createJob(
-        //     '*/5 * * * * *',
-        //     () => {
-        //         const url = 'https://google.com';
+        CronService.createJob(
+            '*/5 * * * * *',
+            () => {
+                const url = 'https://google.com';
 
-        //         new CheckService(
-        //             logRepository,
-        //             () => console.log( `${ url } is ok`),
-        //             ( error ) => console.log( error ),
-        //         ).execute( url )
-        //     }
-        // )
+                new CheckServiceMultiples(
+                    [ fsLogRepository, PostgresLogRepository, mongoLogRepository],
+                    () => console.log( `${ url } is ok`),
+                    ( error ) => console.log( error ),
+                ).execute( url )
+            }
+        )
 
     }
 }
