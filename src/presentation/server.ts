@@ -1,27 +1,32 @@
-import { CronService } from "./cron/cron.service"
-import { CheckService } from "../domain/use-cases/checks/check-service";
 import { LogRepositoryImpl } from "../intrastructure/repositories/log.repository.impl";
 import { FileSystemDataSource } from "../intrastructure/datasources/file-system.datasource";
-import { EmailService } from "../domain/use-cases/email/email.service";
+import { EmailService } from "./email/email.service";
+import { SendEmailLogs } from "../domain/use-cases/email/send-email-log";
+
 const fileSystemLogRepository = new LogRepositoryImpl(
     new FileSystemDataSource()
     // new mongoLogDS(),
     // new PostgreSQL()
 );
 
+const emailService = new EmailService()
+
+
 export class Server {
     public static start() {
-        console.log('Server started...')
-        const emailService = new EmailService()
-        emailService.sendEmail({
-            to: 'cedric.kirmayr@gmail.com',
-            subject: 'Logs de sistema',
-            htmlBody: `
-                <h3>Logs de sistema - NOC</h3>
-                <p>Lorem vilit non veniam</p>
-                <p>Ver logs adjuntos</p>
-            `
-        })
+        console.log('Server started...');
+
+        //* Se usa el caso de uso
+        // new SendEmailLogs(
+        //     emailService,
+        //     fileSystemLogRepository
+        // ).execute(
+        //     ['cedric.kirmayr@gmail.com', 'c.kirmayr01@ufromail.cl']
+        // )
+
+        // emailService.sendEmailWithFileSystemLogs(
+        //     ['cedric.kirmayr@gmail.com', 'c.kirmayr01@ufromail.cl']
+        // );
 
         // CronService.createJob(
         //     '*/5 * * * * *',
