@@ -1,14 +1,8 @@
-import { LogRepositoryImpl } from "../intrastructure/repositories/log.repository.impl";
-import { FileSystemDataSource } from "../intrastructure/datasources/file-system.datasource";
-import { EmailService } from "./email/email.service";
-import { SendEmailLogs } from "../domain/use-cases/email/send-email-log";
-import { CronService } from "./cron/cron.service";
-import { CheckService } from "../domain/use-cases/checks/check-service";
-import { Console, error } from "console";
-import { MongoLogDataSource } from "../intrastructure/datasources/mongo-log.datasource";
-import { LogSeverityLevel } from "../domain/entities/log.entity";
-import { PostgresLogDataSource } from "../intrastructure/datasources/postgres-log.datasource";
-import { CheckServiceMultiples } from "../domain/use-cases/checks/check-service-multiple";
+import { LogRepositoryImpl } from "../intrastructure/repositories";
+import { EmailService } from "./email";
+import { CronService } from "./cron";
+import { MongoLogDataSource, PostgresLogDataSource, FileSystemDataSource } from "../intrastructure/datasources";
+import { CheckServiceMultiples } from "../domain/use-cases/checks";
 
 // const logRepository = new LogRepositoryImpl(
 //     //new FileSystemDataSource()

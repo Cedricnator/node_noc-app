@@ -1,4 +1,4 @@
-import { LogEntity, LogSeverityLevel } from "../entities/log.entity";
+import { LogEntity, LogSeverityLevel } from "../entities";
 
 // Implementamos la regla de negocio de nuestro dominio
 export abstract class LogDataSource {

@@ -1,8 +1,8 @@
 //! USUALMENTE SON NUESTROS CASOS DE USO LOS QUE LLAMAN AL REPOSITORIO
 
-import { EmailService } from "../../../presentation/email/email.service";
-import { LogEntity, LogSeverityLevel } from "../../entities/log.entity";
-import { LogRepository } from "../../repository/log.repository";
+import { EmailService } from "../../../presentation/email";
+import { LogEntity, LogSeverityLevel } from "../../entities";
+import { LogRepository } from "../../repository";
 
 interface SendLogEmailUseCase {
     execute: ( to:string | string[]) => Promise<boolean>
@@ -25,7 +25,7 @@ export class SendEmailLogs implements SendLogEmailUseCase {
         } catch (error) {
             const log = new LogEntity({
                 message: `${error}`,
-                level: LogSeverityLevel.HEIGH,
+                level: LogSeverityLevel.HIGH,
                 origin: 'send-email-log.ts'
             })
 
