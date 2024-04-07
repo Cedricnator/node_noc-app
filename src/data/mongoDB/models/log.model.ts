@@ -28,4 +28,4 @@ const logSchema = new mongoose.Schema({
     }
 })
 
-export const logModel = mongoose.model('Log', logSchema);
+export const LogModel = mongoose.model('Log', logSchema);

@@ -7,7 +7,7 @@
 */
 
 import { envs } from "./config/plugins/envs.plugin";
-import { MongoDataBase } from "./data/mongoDB";
+import { LogModel, MongoDataBase } from "./data/mongoDB";
 import { Server } from "./presentation/server";
 
 
@@ -23,5 +23,18 @@ async function main() {
         dbName: envs.MONGO_DB_NAME
     });
     
+    // Grabar o crear un registro
+    // colección = tablas, documento = registro
+    // const newLog = await LogModel.create({
+    //     message: 'Test message desde Mongo',
+    //     origin: 'App.ts',
+    //     level: 'low'
+    // });
+
+    // await newLog.save();
+    // console.log('Log creado: ', newLog)
+
+   
+
     //Server.start();
 }
