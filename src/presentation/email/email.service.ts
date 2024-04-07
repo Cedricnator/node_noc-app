@@ -1,4 +1,4 @@
-import { envs } from '../../config/plugins/envs.plugin';
+import { envs } from '../../config/plugins';
 import nodemailer from 'nodemailer';
 
 interface SendMailOptions {
