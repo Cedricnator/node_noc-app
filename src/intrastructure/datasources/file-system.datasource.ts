@@ -1,15 +1,14 @@
+import { LogDataSource } from "../../domain/datasources";
+import { LogEntity, LogSeverityLevel } from "../../domain/entities";
 import fs from 'fs';
-import { LogDataSource } from "../../domain/datasources/log.datasource";
-import { LogEntity, LogSeverityLevel } from "../../domain/entities/log.entity";
-import { log } from 'console';
 
 export class FileSystemDataSource implements LogDataSource{
-    private readonly logPath: string = 'logs/';
-    private readonly allLogsPath: string = 'logs/logs-all.log';
+    private readonly logPath:        string = 'logs/';
+    private readonly allLogsPath:    string = 'logs/logs-all.log';
     private readonly mediumLogsPath: string = 'logs/logs-medium.log';
-    private readonly hightLogsPath: string = 'logs/logs-hight.log';
+    private readonly hightLogsPath:  string = 'logs/logs-hight.log';
 
-    constructor(  ) {
+    constructor() {
         this.createLogsFiles();
     }
 
@@ -22,11 +21,12 @@ export class FileSystemDataSource implements LogDataSource{
             this.allLogsPath,
             this.mediumLogsPath,
             this.hightLogsPath
+
         ].forEach( path => {
             if ( fs.existsSync( path )) return;
+
             fs.writeFileSync( path, '' );
         });
-
        
     }
 
@@ -43,6 +43,7 @@ export class FileSystemDataSource implements LogDataSource{
 
     private getLogsFromFile = ( path: string ): LogEntity[] => {
         const content = fs.readFileSync( path, 'utf-8');
+        if( content === '') return [];
         const logs = content.split(`\n`).map( 
             log => LogEntity.fromJson( log ) 
         )
@@ -55,7 +56,7 @@ export class FileSystemDataSource implements LogDataSource{
                 return this.getLogsFromFile(this.allLogsPath);
             case LogSeverityLevel.MEDIUM:
                 return this.getLogsFromFile(this.mediumLogsPath);
-            case LogSeverityLevel.HEIGH:
+            case LogSeverityLevel.HIGH:
                 return this.getLogsFromFile(this.hightLogsPath);
             default:
                 throw new Error(`${ severityLevel } not implemented` );

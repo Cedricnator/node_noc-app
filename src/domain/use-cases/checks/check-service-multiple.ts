@@ -1,7 +1,7 @@
 import { LogEntity, LogSeverityLevel } from "../../entities";
 import { LogRepository } from "../../repository";
 
-interface CheckServiceUseCase {
+interface CheckServiceMultipleUseCase {
     execute( url: string ): Promise<boolean>;
 };
 
@@ -9,12 +9,18 @@ type SuccessCallback = (() => void) | undefined;
 type ErrorCallback = ( (error: string ) => void) | undefined;
 
 
-export class CheckService implements CheckServiceUseCase {
+export class CheckServiceMultiples implements CheckServiceMultipleUseCase {
     constructor(
-        private readonly logRepository: LogRepository,
+        private readonly logRepository: LogRepository[],
         private readonly successCallback: SuccessCallback,
         private readonly errorCallback: ErrorCallback
     ){}
+
+    private callLogs( log: LogEntity ){
+        this.logRepository.forEach( logRepository => {
+            logRepository.saveLog( log );
+        })
+    }
 
     public async execute( url: string): Promise<boolean>{
         try {
@@ -29,7 +35,7 @@ export class CheckService implements CheckServiceUseCase {
                 origin: 'CheckServiceUseCase'
             })
 
-            this.logRepository.saveLog( log )
+            this.callLogs( log )
             this.successCallback && this.successCallback();
             return true;
         } catch (error) {
@@ -42,7 +48,7 @@ export class CheckService implements CheckServiceUseCase {
 
             const errorMessage = `${url} is not ok. ${error }`;
             const log = new LogEntity(entity);
-            this.logRepository.saveLog( log );
+            this.callLogs( log );
             this.errorCallback && this.errorCallback( `${ errorMessage }`);
             return false;
         }

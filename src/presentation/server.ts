@@ -1,41 +1,56 @@
-import { CronService } from "./cron/cron.service"
-import { CheckService } from "../domain/use-cases/checks/check-service";
-import { LogRepositoryImpl } from "../intrastructure/repositories/log.repository.impl";
-import { FileSystemDataSource } from "../intrastructure/datasources/file-system.datasource";
-import { EmailService } from "../domain/use-cases/email/email.service";
-const fileSystemLogRepository = new LogRepositoryImpl(
-    new FileSystemDataSource()
-    // new mongoLogDS(),
-    // new PostgreSQL()
+import { LogRepositoryImpl } from "../intrastructure/repositories";
+import { EmailService } from "./email";
+import { CronService } from "./cron";
+import { MongoLogDataSource, PostgresLogDataSource, FileSystemDataSource } from "../intrastructure/datasources";
+import { CheckServiceMultiples } from "../domain/use-cases/checks";
+
+// const logRepository = new LogRepositoryImpl(
+//     //new FileSystemDataSource()
+//     // new MongoLogDataSource(),
+//     new PostgresLogDataSource()
+// );
+
+const PostgresLogRepository = new LogRepositoryImpl(
+    new PostgresLogDataSource()
 );
 
-export class Server {
-    public static start() {
-        console.log('Server started...')
-        const emailService = new EmailService()
-        emailService.sendEmail({
-            to: 'cedric.kirmayr@gmail.com',
-            subject: 'Logs de sistema',
-            htmlBody: `
-                <h3>Logs de sistema - NOC</h3>
-                <p>Lorem vilit non veniam</p>
-                <p>Ver logs adjuntos</p>
-            `
-        })
+const fsLogRepository = new LogRepositoryImpl(
+    new FileSystemDataSource()
+);
 
-        // CronService.createJob(
-        //     '*/5 * * * * *',
-        //     () => {
-        //         const url = `http://localhost:3000`; 
-        //         new CheckService(
-        //             fileSystemLogRepository,
-        //             () => console.log(`${url} is ok`),
-        //             (error) => console.error(error),
-                
-        //         ).execute( url );
-        //     }
-        // );
+const mongoLogRepository = new LogRepositoryImpl(
+    new MongoLogDataSource()
+)
+
+const emailService = new EmailService()
+
+export class Server {
+    public static async start() {
+        console.log('Server started...');
+
+        //* Se usa el caso de uso
+        // new SendEmailLogs(
+        //     emailService,
+        //     fileSystemLogRepository
+        // ).execute(
+        //     ['cedric.kirmayr@gmail.com', 'c.kirmayr01@ufromail.cl']
+        // )
+
+        // const logs = await logRepository.getLogs(LogSeverityLevel.LOW );
+        // console.log( logs )
+
+        CronService.createJob(
+            '*/5 * * * * *',
+            () => {
+                const url = 'https://google.com';
+
+                new CheckServiceMultiples(
+                    [ fsLogRepository, PostgresLogRepository, mongoLogRepository],
+                    () => console.log( `${ url } is ok`),
+                    ( error ) => console.log( error ),
+                ).execute( url )
+            }
+        )
 
     }
-
 }

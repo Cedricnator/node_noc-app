@@ -1,4 +1,4 @@
-import { LogEntity, LogSeverityLevel } from "../entities/log.entity";
+import { LogEntity, LogSeverityLevel } from "../entities";
 
 // Permite llamar métodos que se encuentran en dataSource
 export abstract class LogRepository {

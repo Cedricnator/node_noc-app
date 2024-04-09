@@ -13,6 +13,9 @@ MAILER_EMAIL =
 MAILER_SECRET_KEY = 
 PROD = false
 ```
+3. ejecutar el compando ```npm run dev```
+4. levantar la base de datos con el comando ```docker compose up -d```
+
 
 ## Install:
 1. Clone the repository
@@ -32,7 +35,8 @@ npm run dev
 npm run test
 ```
 
-
+## Obtener Gmail Key
+[Google AppPasswords](htpps://myaccount.google.com/u/0/apppasswords)
 
 ## Contributions:
 Cedric Kirmayr
